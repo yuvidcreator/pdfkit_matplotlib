@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pdfkit
+pandas
+openpyxl
+matplotlib
+pydantic
+orjson
+PyPDF2
+python-multipart

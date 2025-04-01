@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  fastapi-app:
+    build: .
+    dockerfile: ./Dockerfile
+    container_name: fastapi-pdf-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: always
+
+networks:
+  pdf_gen-fastapi:
+      driver: bridge
