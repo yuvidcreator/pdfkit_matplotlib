@@ -8,6 +8,10 @@ def generate_pdf(data, chart_path, output_file):
     chart_abs_path = os.path.abspath(chart_path)
     background_abs_path = os.path.abspath("static/background.webp")
 
+    # background: url("file://{background_abs_path}")
+
+    print(chart_path)
+
     html_content = f"""
     <html>
     <head>
@@ -25,7 +29,7 @@ def generate_pdf(data, chart_path, output_file):
                 {"".join(f"<tr><td>{k}</td><td>{v}</td></tr>" for k, v in data.items())}
             </table>
             <h2>Analysis Chart</h2>
-            <img src="file://{chart_abs_path}" alt="Doughnut Chart"/>
+            <img src="url("file://{chart_abs_path}")" alt="Doughnut Chart"/>
         </div>
     </body>
     </html>
@@ -35,6 +39,7 @@ def generate_pdf(data, chart_path, output_file):
         "quiet": "",
         "enable-local-file-access": "",  # ✅ Allows local file access
         "page-size": "A4",
+        'encoding': 'UTF-8',
         "dpi": 300
     }
 

@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  fastapi:
+    build: ./backend
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      DATABASE_URL: mysql://user:password@mysql:3306/dbname
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:latest
+    container_name: redis_broker
+    restart: always
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: ./backend
+    container_name: celery_worker
+    restart: always
+    depends_on:
+      - redis
+      - fastapi
+    environment:
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ./backend:/app
+    command: celery -A app.worker.celery worker --loglevel=info
+
+  wkhtmltopdf:
+    image: ghcr.io/wkhtmltopdf/packaging:latest
+    container_name: wkhtmltopdf
+    restart: always
+    entrypoint: ["/bin/sh", "-c", "sleep infinity"]
+
+volumes:
+  mysql_data:
+    driver: local
