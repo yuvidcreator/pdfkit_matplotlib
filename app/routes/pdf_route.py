@@ -17,7 +17,7 @@ async def handle_excel_file(file_path: str, output_pdf: str):
     data = process_excel(file_path)
     
     # Generate doughnut chart
-    chart_path = generate_doughnut_chart(data, f"{UPLOAD_DIR}chart.webp")
+    chart_path = generate_doughnut_chart(data, "static/chart.webp")
     
     temp_pdf = f"{UPLOAD_DIR}temp_report.pdf"
     
@@ -37,6 +37,7 @@ async def upload_excel(file: UploadFile = File(...), background_tasks: Backgroun
     STATIC_DIR = "static/"
     
     file_path = os.path.join(UPLOAD_DIR, file.filename)
+    print(file.filename)
     with open(file_path, "wb") as f:
         f.write(file.file.read())
     

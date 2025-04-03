@@ -1,7 +1,7 @@
 import matplotlib
 import matplotlib.pyplot as plt
 
-def generate_doughnut_chart(data, filename="uploads/chart.webp"):
+def generate_doughnut_chart(data, filename="static/chart.webp"):
     """Generate and save a doughnut chart from Excel data."""
     
     if not data:

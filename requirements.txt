@@ -1,10 +1,10 @@
 fastapi
 uvicorn
-pdfkit
+pydantic
 pandas
 openpyxl
 matplotlib
-pydantic
 orjson
+pdfkit
 PyPDF2
 python-multipart

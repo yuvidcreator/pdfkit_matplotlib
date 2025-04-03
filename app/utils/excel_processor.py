@@ -1,6 +1,6 @@
 import pandas as pd
 
-def process_excel(file_path):
+def process_excel(file_path) -> dict:
     """Extract relevant data from the Excel file for the report."""
     
     df = pd.read_excel(file_path)
