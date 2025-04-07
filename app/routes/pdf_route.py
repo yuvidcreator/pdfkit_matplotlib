@@ -14,20 +14,23 @@ async def handle_excel_file(file_path: str, output_pdf: str):
     UPLOAD_DIR = "uploads/"
     STATIC_DIR = "static/"
 
-    data = process_excel(file_path)
-    
-    # Generate doughnut chart
-    chart_path = generate_doughnut_chart(data, "static/chart.webp")
-    
-    temp_pdf = f"{UPLOAD_DIR}temp_report.pdf"
-    
-    generate_pdf(data, chart_path, temp_pdf)  # Generate report with chart
-    
-    # Merge with static pages
-    static_pdf = f"{STATIC_DIR}static_pages.pdf"
-    if not os.path.exists(static_pdf):
-        raise FileNotFoundError(f"Static PDF not found: {static_pdf}")
-    merge_pdfs([static_pdf, temp_pdf], output_pdf)
+    try:
+        data = process_excel(file_path)
+        
+        # Generate doughnut chart
+        chart_path = generate_doughnut_chart(data, "images/chart.webp")
+        
+        temp_pdf = f"{UPLOAD_DIR}temp_report.pdf"
+        
+        generate_pdf(data, chart_path, temp_pdf)  # Generate report with chart
+        
+        # Merge with static pages
+        static_pdf = f"{STATIC_DIR}static_pages.pdf"
+        if not os.path.exists(static_pdf):
+            raise FileNotFoundError(f"Static PDF not found: {static_pdf}")
+        merge_pdfs([static_pdf, temp_pdf], output_pdf)
+    except Exception as e:
+        print(f"Error --->  {e}")
 
 
 

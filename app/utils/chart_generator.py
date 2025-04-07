@@ -1,13 +1,13 @@
 import matplotlib
 import matplotlib.pyplot as plt
 
-def generate_doughnut_chart(data, filename="static/chart.webp"):
+def generate_doughnut_chart(data, filename="images/chart.webp"):
     """Generate and save a doughnut chart from Excel data."""
     
     if not data:
         raise ValueError("No data available for chart generation.")
 
-    print(data)
+    print("--------->", data)
     labels = list(data.keys())
     sizes = list(data.values())
 

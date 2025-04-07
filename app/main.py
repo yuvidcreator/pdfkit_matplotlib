@@ -16,7 +16,7 @@ os.makedirs(STATIC_DIR, exist_ok=True)
 os.makedirs(IMAGES_DIR, exist_ok=True)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-# app.mount("/images", StaticFiles(directory="images"), name="images")
+app.mount("/images", StaticFiles(directory="images"), name="images")
 # app.mount("/images", CustomStaticFiles(directory="images"), name="images")
 
 app.include_router(pdf_routes)
